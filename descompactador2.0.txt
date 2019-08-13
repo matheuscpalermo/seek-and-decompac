@@ -1,0 +1,15 @@
+#DEFININDO FUNÇÃO
+
+simple_decompac(diretorio)
+	{
+
+	for arquivo in find diretorio -name "*.tar.gz"
+		do
+			tar -xvzf $arquivo
+			rmv $arquivo
+		done
+	for arquivo in (find diretorio -type d "*") ou (-t list) ou (ls-d*/)
+		do 
+			simple_decompac($arquivo)
+	
+	}		
