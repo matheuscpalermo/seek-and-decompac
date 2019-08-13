@@ -8,8 +8,8 @@ seek_and_decompac(diretorio)
 			tar -xvzf $arquivo
 			rmv $arquivo
 		done
-	for arquivo in (find diretorio -type d "*") ou (-t list) ou (ls-d*/)
+	for arquivo in # TESTAR TRÊS OPÇÕES: (find diretorio -type d "*") ou (-t list) ou (ls-d*/)
 		do 
 			simple_decompac($arquivo)
-	
+		done
 	}		
