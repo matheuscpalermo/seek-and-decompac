@@ -1,4 +1,4 @@
-#Script detects compact files (.tar.gz) in the current directory, and it's subdirectories, decompacts them, extract all the files to folder with the parent compact file names and deletes empty folders left behind.
+#Script detects compact files (.tar.gz) in the current directory and it's subdirectories, decompacts them, extract all the files to folder with the parent compact file names and deletes empty folders left behind.
 ##################################################
 
 
