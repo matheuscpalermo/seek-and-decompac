@@ -1,15 +1,7 @@
-#DEFININDO FUNÇÃO
+#Script detects compact files (.tar.gz) in the current directory, and it's subdirectories, decompacts them and deletes empty directories #left behind. 
 
-seek_and_decompac(diretorio)
-	{
+while [ ! -z "$(find . -name '*.tar.gz')"  ]; do
+	find . -name "*.tar.gz" -exec tar xfvz "{}" \; -exec rm "{}" \;	
+done
 
-	for arquivo in find diretorio -name "*.tar.gz"
-		do
-			tar -xvzf $arquivo
-			rmv $arquivo
-		done
-	for arquivo in # TESTAR TRÊS OPÇÕES: (find diretorio -type d "*") ou (-t list) ou (ls-d*/)
-		do 
-			simple_decompac($arquivo)
-		done
-	}		
+find . -type d -empty -exec rmdir "{}" \;
