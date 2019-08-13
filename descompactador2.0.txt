@@ -1,6 +1,6 @@
 #DEFININDO FUNÇÃO
 
-simple_decompac(diretorio)
+seek_and_decompac(diretorio)
 	{
 
 	for arquivo in find diretorio -name "*.tar.gz"
