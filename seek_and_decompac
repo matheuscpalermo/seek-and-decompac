@@ -1,34 +1,29 @@
-#Script detects compact files (.tar.gz) in the current directory and it's subdirectories, decompacts them, extract all the files to folder with the parent compact file names and deletes empty folders left behind.
+#Script detects compact files (.tar.gz) within the current directory and it's subdirectories, decompacts and extracts all of them to folders named after the parent compact files and deletes empty folders left behind.
 ##################################################
 
 
-#CREATES FINAL DIRECTORIES
-
-find . -maxdepth 1 -name "*.tar.gz" -exec mkdir "$("{} | cut -f1 -d '.'")" \; -exec mv "{}" "$("{} | cut -f1 -d '.'")" \;
-
-##################################################
-
-
-#DECOMPACTS FILES
-
-while [ ! -z "$(find . -name '*.tar.gz')"  ]; do
-	find . -name "*.tar.gz" -exec tar xfvz "{}" \; -exec rm "{}" \;	
-done
-##################################################
-
-
-#EXTRACT FILES TO FINAL DIRECTORIES
-
-for dir in "$(find . -maxdepth 1 -type d)"
+#CREATES DIRECTORIES NAMED AFTER THE COMPACT FILES, DECOMPACTS THEM AND MOVES IT'S CONTENTS TO IT'S RESPECTIVE DIRECTORY
+for file in $(find . -mindepth 1 -maxdepth 1 -name '*.tar.gz')
 	do
-	find $dir -type f -exec mv "{}" $dir \;
+	mkdir "${file%.*}" && mv "$file" "${file%.*}"
+
+	while [ ! -z "$(find ${file%.*} -name '*.tar.gz')"  ]; do
+		find ${file%.*} -type f -name "*.tar.gz" -exec tar xfvz "{}" -C "${file%.*}" \; -exec rm "{}" \;
+	done
+
 done
-##################################################
+#################################################
 
 
-#DELETES EMPTY FOLDERS UNDER CURRENT DIRECTORY
+#MOVES ALL THE FILES TO THE DIRECTORY THEY'RE WITHIN
+for dir in $(find . -mindepth 1 -maxdepth 1 -type d)	
+	do
+	find $dir -type f -exec mv "{}" "$dir" \;
+done
+################################################
 
+
+#DELETES EMPTY SUBDIRECTORIES 
 while [ ! -z "$(find . -type d -empty)" ]; do
 	find . -type d -empty -exec rmdir "{}" \;
 done
-##################################################
